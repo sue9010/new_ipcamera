@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RoiSettingsDialog</class>
+ <widget class="QDialog" name="RoiSettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1345</width>
+    <height>863</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ROI Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
+   <item>
+    <widget class="QLabel" name="videoFeedLabel">
+     <property name="text">
+      <string>Camera Video Feed</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="roiTableWidget">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>330</height>
+      </size>
+     </property>
+     <property name="rowCount">
+      <number>10</number>
+     </property>
+     <property name="columnCount">
+      <number>13</number>
+     </property>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <column>
+      <property name="text">
+       <string>Use ROI</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Start X</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Start Y</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>End X</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>End Y</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Mode</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Condition</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Temperature</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Start Delay</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Stop Delay</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>ISO SUE</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>ISO Color</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Alarm Out</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>RoiSettingsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>RoiSettingsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

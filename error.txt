@@ -1,0 +1,16 @@
+RoiSettingsDialog: Initializing...
+RoiSettingsDialog: UI loaded.
+Traceback (most recent call last):
+  File "e:\Coding_practice\new_thermal_ip\main.py", line 744, in <lambda>
+    roi_button.clicked.connect(lambda checked, config=config, index=i: self.show_roi_settings_dialog(config, index))
+                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "e:\Coding_practice\new_thermal_ip\main.py", line 800, in show_roi_settings_dialog
+    dialog = RoiSettingsDialog(self, camera_config=camera_config, camera_index=camera_index, captured_image=captured_image)
+  File "e:\Coding_practice\new_thermal_ip\main.py", line 478, in __init__
+    self.videoFeedLabel = ROIViewLabel(self)
+                          ~~~~~~~~~~~~^^^^^^
+  File "e:\Coding_practice\new_thermal_ip\main.py", line 240, in __init__
+    self.original_image_size = QSize() # Store original image size
+                               ^^^^^
+NameError: name 'QSize' is not defined
+VideoThread 0: Releasing video capture.
