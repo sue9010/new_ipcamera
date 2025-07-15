@@ -488,6 +488,7 @@ class RoiSettingsDialog(QDialog):
         self.rois = [QRect(0, 0, 0, 0) for _ in range(10)]
         self.roi_states = [False for _ in range(10)]
 
+        self.buttonBox.accepted.connect(self.apply_roi_settings_to_api)
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
 
@@ -639,6 +640,65 @@ class RoiSettingsDialog(QDialog):
         finally:
             # Reconnect signal
             self.roiTableWidget.itemChanged.connect(self.handle_table_change)
+
+    def apply_roi_settings_to_api(self):
+        ip_address = self.camera_config.get('ip', '')
+        user_id = self.camera_config.get('id', '')
+        password = self.camera_config.get('password', '')
+
+        if not ip_address or not user_id or not password:
+            print("Error: Camera IP, ID, or Password not provided for ROI API call.")
+            return
+
+        all_roi_settings = self.get_roi_settings()
+
+        for i, roi_data in enumerate(all_roi_settings):
+            # Construct API URL parameters
+            params = {
+                'id': user_id,
+                'passwd': password,
+                'action': f'setthermalroi{i}',
+                'roi_use': roi_data['roi_use'],
+                'startx': roi_data['start_x'],
+                'starty': roi_data['start_y'],
+                'endx': roi_data['end_x'],
+                'endy': roi_data['end_y'],
+                'mode': roi_data['mode'],
+                'condition': roi_data['condition'],
+                'temperature': roi_data['temperature'],
+                'start_delay': roi_data['start_delay'],
+                'stop_delay': roi_data['stop_delay'],
+                'iso_use': roi_data['iso_sue'], # Note: API uses iso_use, table uses iso_sue
+                'iso_color': roi_data['iso_color'],
+                'alarm_out': roi_data['alarm_out'],
+            }
+
+            api_url = f"http://{ip_address}/cgi-bin/control/camthermalroi.cgi"
+            print(f"Attempting to set ROI {i} settings: {api_url}?{requests.compat.urlencode(params)}")
+
+            try:
+                response = requests.get(api_url, params=params, timeout=5)
+                response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+                print(f"Successfully set ROI {i} data: {response.text}")
+            except requests.exceptions.RequestException as e:
+                print(f"Error setting ROI {i} settings: {e}")
+                with open("error.txt", "a") as f:
+                    f.write(f"\n--- Error setting ROI {i} settings ---\n")
+                    f.write(f"URL: {api_url}?{requests.compat.urlencode(params)}\n")
+                    f.write(f"Error: {e}\n")
+                    f.write(traceback.format_exc())
+                    f.write("------------------------------------\n")
+            except Exception as e:
+                print(f"An unexpected error occurred while setting ROI {i}: {e}")
+                import traceback
+                with open("error.txt", "a") as f:
+                    f.write(f"\n--- Crash while setting ROI {i} data ---\n")
+                    f.write(f"URL: {api_url}?{requests.compat.urlencode(params)}\n")
+                    f.write(f"Error: {e}\n")
+                    f.write(traceback.format_exc())
+                    f.write("------------------------------------\n")
+
+        print("All ROI settings applied successfully (or attempted to apply).")
 
     def get_roi_settings(self):
         roi_settings = []
